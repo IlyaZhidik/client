@@ -50,9 +50,9 @@ const form = ref()
 // watchEffect(() => console.log(form.value))
 const valid = ref(true)
 const createNewPlayer = async () => {
-  const validate = await form.value.validate()
-  if (validate) {
-    player.save()
+  const { valid } = await form.value.validate()
+  if (valid) {
+    await player.save()
   }
 }
 const validatePlayerName = (value: string) => {

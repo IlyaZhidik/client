@@ -35,6 +35,6 @@
     "socket.io-client": "^4.7.2",
     "typescript": "^5.2.2",
     "vuetify": "^3.4.0",
-    "feathers-api": "./server/fight-club-0.0.1.tgz"
+    "feathers-api": "./server/fight-club-0.0.5.tgz"
   }
 }
