@@ -1,0 +1,40 @@
+{
+  "name": "fight-club",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt dev"
+  },
+  "dependencies": {
+    "@feathersjs/authentication-client": "^5.0.3",
+    "@feathersjs/feathers": "^5.0.3",
+    "@feathersjs/socketio-client": "^5.0.3",
+    "@mdi/font": "^7.0.96",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@pinia/nuxt": "^0.4.11",
+    "@prettier/plugin-pug": "^3.0.0",
+    "@types/lodash": "^4.14.198",
+    "@vueuse/nuxt": "^10.4.1",
+    "dayjs": "^1.11.10",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-vue": "^9.9.0",
+    "eslint-plugin-vue-pug": "^0.6.0",
+    "feathers-pinia": "^4.0.0",
+    "nitropack": "^2.7.2",
+    "nuxt": "^3.8.1",
+    "nuxt-feathers-pinia": "^0.0.3",
+    "nuxt-icons": "^3.2.1",
+    "nuxt-lodash": "^2.4.1",
+    "pinia": "^2.1.7",
+    "prettier": "^3.0.3",
+    "pug": "^3.0.2",
+    "pug-plain-loader": "^1.1.0",
+    "sass": "^1.69.5",
+    "socket.io-client": "^4.7.2",
+    "typescript": "^5.2.2",
+    "vuetify": "^3.4.0",
+    "feathers-api": "./server/fight-club-0.0.1.tgz"
+  }
+}
