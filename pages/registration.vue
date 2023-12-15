@@ -1,46 +1,54 @@
 <template lang="pug">
-v-container.h-screen
-  v-row.h-100(align='center', no-gutters)
-    v-spacer
-    v-col
-      v-card.bg-secondary.d-flex.flex-column.align-center.justify-center.pa-10(
-        width='500'
-      )
-        template(#title)
-          p Новый член Бойцовского клуба
-        v-form(ref='form', v-model='valid', @submit.prevent='createNewPlayer')
-          v-row
-            v-col(cols='12')
-              v-text-field(
-                v-model='player.nickname',
-                type='text',
-                :rules='[validatePlayerName]',
-                label='НИК'
-              )
-            v-col(cols='12')
-              v-text-field(
-                v-model='player.email',
-                type='text',
-                :rules='[validatePlayerMail]',
-                label='мейл'
-              )
-            v-col(cols='12')
-              v-text-field(
-                v-model='player.password',
-                type='text',
-                :rules='[validatePlayerPass]',
-                label='пароль'
-              )
-            v-col
-              v-select(
-                v-model='player.gender',
-                label='Пол',
-                :items='["М", "Ж"]',
-                :rules='[validatePlayerGender]'
-              )
-            v-col.d-flex.align-center.justify-center(cols='12')
-              v-btn(type='submit') Зарегистрироваться
-    v-spacer
+v-row(align='center', no-gutters)
+  v-spacer
+  v-col(cols='11', sm='10', md='8', lg='7', xl='6')
+    v-card.bg-secondary.pa-10(width='100%')
+      v-row(align='center')
+        v-col
+          h1.text-h4.font-weight-bold.text-red.text-center Новый член Бойцовского клуба
+      v-row
+        v-spacer
+        v-col(cols='12', sm='11', md='9', lg='9', xl='8')
+          v-form(
+            ref='form',
+            v-model='valid',
+            @submit.prevent='createNewPlayer'
+          )
+            v-row
+              v-col(cols='12')
+                v-text-field(
+                  v-model='player.nickname',
+                  type='text',
+                  :rules='[validatePlayerName]',
+                  label='НИК'
+                )
+              v-col(cols='12')
+                v-text-field(
+                  v-model='player.email',
+                  type='text',
+                  :rules='[validatePlayerMail]',
+                  label='мейл'
+                )
+              v-col(cols='12')
+                v-text-field(
+                  v-model='player.password',
+                  type='text',
+                  :rules='[validatePlayerPass]',
+                  label='пароль'
+                )
+              v-col
+                v-select(
+                  v-model='player.gender',
+                  label='Пол',
+                  :items='["М", "Ж"]',
+                  :rules='[validatePlayerGender]'
+                )
+              v-col.d-flex.align-center.justify-center(cols='12')
+                v-btn(type='submit') Зарегистрироваться
+              v-col.d-flex.justify-end(cols='12')
+                NuxtLink(to='/login', style='text-decoration: none') Логин
+        v-spacer
+  v-spacer
 </template>
 
 <script setup lang="ts">
@@ -50,9 +58,10 @@ const form = ref()
 // watchEffect(() => console.log(form.value))
 const valid = ref(true)
 const createNewPlayer = async () => {
-  const validate = await form.value.validate()
-  if (validate) {
-    player.save()
+  const { valid } = await form.value.validate()
+  if (valid) {
+    await player.save()
+    await navigateTo('/menu')
   }
 }
 const validatePlayerName = (value: string) => {
