@@ -1,4 +1,5 @@
 <template lang="pug">
+SnackBar
 NuxtLayout
   NuxtPage
 </template>

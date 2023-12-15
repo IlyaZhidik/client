@@ -1,6 +1,4 @@
-<template lang="pug">
-p HG
-</template>
+<template lang="pug"></template>
 
 <script setup lang="ts"></script>
 

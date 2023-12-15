@@ -4045,9 +4045,9 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.4"
 
-feathers-api@./server/fight-club-0.0.5.tgz:
-  version "0.0.5"
-  resolved "./server/fight-club-0.0.5.tgz#49f9b2af8fd28fa87b7e8df785327eefe573b1ff"
+feathers-api@./server/fight-club-0.0.9.tgz:
+  version "0.0.9"
+  resolved "./server/fight-club-0.0.9.tgz#54a1e29c36411e6b8bd344cc71e2ce4edf0da552"
   dependencies:
     "@feathersjs/adapter-commons" "5.0.12"
     "@feathersjs/authentication" "5.0.12"

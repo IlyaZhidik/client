@@ -39,6 +39,20 @@ export default defineNuxtPlugin((nuxt) => {
           return useInstanceDefaults(defaults, data)
         },
       },
+      characters: {
+        setupInstance(data: any) {
+          const defaults = {
+            lvl: 1,
+            exp: 0,
+            wins: 0,
+            games: 0,
+            powerPoints: 150,
+            stamina: 0,
+            strength: 0,
+          }
+          return useInstanceDefaults(defaults, data)
+        },
+      },
     },
   })
 
