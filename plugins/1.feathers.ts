@@ -46,7 +46,7 @@ export default defineNuxtPlugin((nuxt) => {
             exp: 0,
             wins: 0,
             games: 0,
-            powerPoints: 150,
+            powerPoints: 0,
             stamina: 0,
             strength: 0,
           }
