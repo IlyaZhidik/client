@@ -58,6 +58,7 @@ v-row(align='center', no-gutters)
                   variant='text',
                   @click='dialog = false'
                 ) Close
+              p {{ game }}
         v-spacer
 
   v-spacer
@@ -91,6 +92,7 @@ const createNewGame = async () => {
       game.value.hostId = playerId
       await game.value.save()
       dialog.value = false
+      navigateTo('/game')
     }
   } catch (e) {
     console.log(e)
