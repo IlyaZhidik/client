@@ -12,7 +12,6 @@ v-snackbar(
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 const { snackbar, text, color, timeout } = storeToRefs(useSnackbarStore())
-console.log(snackbar, text)
 </script>
 
 <style scoped lang="scss"></style>

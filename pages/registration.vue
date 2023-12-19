@@ -2,11 +2,8 @@
 v-row(align='center', no-gutters)
   v-spacer
   v-col(cols='11', sm='10', md='8', lg='7', xl='6')
-    v-card.bg-secondary.pa-10(width='100%')
+    DefaultCardWrapper(title='Новый член Бойцовского клуба')
       v-row(align='center')
-        v-col
-          h1.text-h4.font-weight-bold.text-red.text-center Новый член Бойцовского клуба
-      v-row
         v-spacer
         v-col(cols='12', sm='11', md='9', lg='9', xl='8')
           v-form(

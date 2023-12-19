@@ -1,229 +1,157 @@
 <template lang="pug">
-v-row(align='center', no-gutters)
-  v-spacer
-  v-col(cols='11', sm='10', md='8', lg='7', xl='6')
-    v-card.bg-secondary.pa-10(width='100%')
+DefaultCardWrapper(title='Select Hero')
+  BaseDialogWrapper(v-model='characterDialogData.display')
+    CharacterForm(ref='characterFormRef', v-model='characterDialogData.value')
+    template(#actions)
       v-row
-        v-col.text-center
-          p.text-sm-h2.text-h4.font-weight-bold.text-red Select hero
-          v-list.bg-primary.rounded-lg.pa-1
-            v-list-item.my-2.bg-white.rounded-lg(
-              v-for='(character, index) in characters.data',
-              :key='index',
-              width='100%'
-            )
-              v-dialog(v-model='dialog1', persistent, width='600')
-                v-card.bg-secondary.pa-10(width='100%')
-                  v-row
-                    v-col.text-center
-                      v-form
-                        v-row
-                          v-col
-                            p сменить изображение
-                            v-dialog(
-                              v-model='dialog2',
-                              persistent,
-                              width='600'
-                            )
-                              v-card.bg-secondary.pa-10(width='100%')
-                                v-row
-                                  v-col.text-center
-                                    v-form(
-                                      v-model='valid',
-                                      @submit.prevent='createCharacter'
-                                    )
-                                      v-row
-                                        v-col
-                                          v-text-field(
-                                            type='file',
-                                            :rules='[validateFile]'
-                                          )
-                                          v-btn.text-subtitle-1(type='submit') Изменить аватар
-                                    v-btn.text-subtitle-1.d-flex.justify-end(
-                                      @click='dialog2 = false'
-                                    ) Назад
-                            v-avatar(
-                              size='x-large',
-                              title='Изменить изображение',
-                              @click='dialog2 = true'
-                            )
-                              v-img(
-                                :src='selectedCharacter.avatar',
-                                alt='Аватарка пользователя',
-                                style='width: 100%, height=auto'
-                              )
-
-                            p опыт: {{ selectedCharacter.exp }}
-                            .healthbar.border-solid.ma-1.bg-white(
-                              style='height: 10px'
-                            )
-                              .healthbar_value.border-solid.bg-red(
-                                style='height: 100%',
-                                :style='{ width: experiencePercent }'
-                              )
-                          v-col
-                            p Количество игр: {{ selectedCharacter.games }}
-                            p Количество побед: {{ selectedCharacter.wins }}
-                            div
-                              p {{ selectedCharacter.who }}
-                              v-btn изменить класс
-                          v-col
-                            p уровень: {{ selectedCharacter.lvl }}
-                            p очки характеристик: {{ selectedCharacter.powerPoints }}
-                            p сила: {{ selectedCharacter.strength }}
-                            p выносливость: {{ selectedCharacter.stamina }}
-                          v-col.d-flex.align-center.justify-center(cols='12')
-                            v-btn.text-subtitle-1(@click='dialog1 = false') назад
-              v-avatar(size='x-large', title='Характеристики')
-                v-img(
-                  v-if='character.avatar',
-                  :src='character.avatar',
-                  alt='Аватарка пользователя',
-                  style='width: 100%, height=auto',
-                  @click='selectCharacter(character)'
-                )
+        v-col.d-flex.align-center.justify-center(cols='12')
+          v-btn.text-subtitle-1(@click='save') Сохранить
+        v-col.d-flex.align-center.justify-center(cols='12')
+          v-btn.text-subtitle-1(@click='characterDialogData.display = false') Закрыть
+  v-row
+    v-col.text-center(cols='12')
+      template(v-if='characters$.data.length')
+        v-list.bg-primary.rounded-lg.pa-1
+          template(
+            v-for='(character, index) in characters$.data',
+            :key='index'
+          )
+            v-list-item.my-2.bg-white.rounded-lg
+              template(#prepend)
+                v-avatar(size='x-large')
+                  v-img(
+                    :src='character.avatar',
+                    alt='Аватарка пользователя',
+                    @click='editCharacter(character)'
+                  )
+              template(#default)
+                v-btn.text-subtitle-1(
+                  color='primary',
+                  alt='Выбрать героя',
+                  @click='openGovno(character)'
+                ) Select
+                BaseDialogWrapper(v-model='menuDialogData.display')
+                  template(#actions)
+                    h4.text-red.text-h4.font-weight-bold Выбери класс соперника
+                    v-row
+                      v-col
+                        v-select(
+                          v-model='enemySelect',
+                          label='Выбери соперника',
+                          :items='whoItems',
+                          item-title='label',
+                          item-value='value',
+                          :rules='[validateClass]'
+                        )
+                      v-row
+                        v-col.d-flex.align-end.justify-end(cols='12')
+                          v-btn.text-subtitle-1(
+                            @click='selectCharacter(menuDialogData.value)'
+                          ) Выбрать
+                          v-btn.text-subtitle-1(
+                            @click='menuDialogData.display = false'
+                          ) Закрыть
               template(#append)
                 v-btn.text-subtitle-1(
                   color='red',
-                  @click='deleteBtn(character._id)'
+                  @click='deleteCharacter(character)'
                 ) Удалить героя
-          v-dialog(v-model='dialog', persistent, width='600')
-            template(#activator='{ props }')
-              v-btn.text-subtitle-1(
-                color='primary',
-                v-bind='props',
-                width='100%',
-                height='40',
-                @click='player = api.service("characters").new({})'
-              ) Create Hero
-            v-card.bg-secondary.pa-10(width='100%')
-              v-row
-                v-col.text-center
-                  v-form(
-                    ref='form',
-                    v-model='valid',
-                    @submit.prevent='createCharacter'
-                  )
-                    v-row
-                      v-col(cols='12')
-                        v-text-field(
-                          v-model='player.avatar',
-                          type='text',
-                          :rules='[validateImageUrl]',
-                          label='Название'
-                        )
-                      v-col
-                        .text-caption
-                        v-select(
-                          v-model='player.who',
-                          label='class',
-                          :items='["warrior", "mage"]',
-                          :rules='[validateClass]'
-                        )
-                      v-col
-                        p распределите начальные параметры силы и выносливости
-                        v-slider(
-                          v-model='slider1',
-                          thumb-label,
-                          min='0',
-                          max='150',
-                          :step='1'
-                        )
-                        div Сила: {{ slider1 }}
-                        div Выносливость: {{ 150 - slider1 }}
-                      v-col.d-flex.align-center.justify-center(cols='12')
-                        v-btn.text-subtitle-1(type='submit') Создать героя
-                        v-btn.text-subtitle-1(
-                          color='blue-darken-1',
-                          variant='text',
-                          @click='dialog = false'
-                        ) Close
-                        v-avatar(size='x-large')
-                          v-img(
-                            v-if='player.avatar',
-                            :src='player.avatar',
-                            alt='Аватарка пользователя',
-                            style='width: 100%, height=auto'
-                          )
-  v-spacer
+      template(v-else)
+        h4.text-primary.text-h5.font-weight-bold No Characters Yet..
+  v-row
+    v-spacer
+    v-col(cols='9')
+      v-btn.text-subtitle-1(
+        color='primary',
+        width='100%',
+        height='40',
+        @click='createCharacter'
+      ) Create Hero
+    v-spacer
 </template>
 
 <script setup lang="ts">
-const slider1 = ref(1)
-const dialog = ref(false)
-const dialog1 = ref(false)
-const dialog2 = ref(false)
-const form = ref()
-const imageUrl = ref()
-const valid = ref(true)
+console.log('zdes')
 const { api } = useFeathers()
-const player = ref()
-const powerPoints = ref()
-const selectedCharacter = ref()
-// const charactersQuery = computed(() => '657b5f252332b21576af296e')
-const experiencePercent = computed(
-  (): number => (selectedCharacter.exp / 10) * 100,
-)
-const staminaValue = computed((): number => 150 - slider1.value)
+const snackbar = useSnackbarStore()
+const valid = ref(true)
+const characterDialogData = reactive<IDialogData>({
+  display: false,
+  value: null,
+})
+const enemySelect = ref()
+const characterFormRef = ref()
+const form = ref()
 const charactersQuery = computed(() => ({
   query: {
     $limit: 10,
   },
 }))
-const characters = api
+const characters$ = api
   .service('characters')
   .useFind(charactersQuery, { paginateOn: 'server' })
 
-watchEffect(() => {
-  // console.log(characters.data)
-})
-const selectCharacter = (character) => {
-  selectedCharacter.value = character
-  dialog1.value = true
+const createCharacter = () => {
+  characterDialogData.display = true
+  characterDialogData.value = api.service('characters').new()
 }
-const zxc = (): number => characters.data[0].strength + 1
-const validateImageUrl = (url: string): boolean => {
-  if (url) {
-    return true
-  }
-  return 'Введите корректный Url'
+const editCharacter = (character: ICharacter) => {
+  characterDialogData.display = true
+  characterDialogData.value = character.clone()
 }
-const createCharacter = async () => {
+const deleteCharacter = async (character: ICharacter) => {
   try {
-    const { valid } = await form.value.validate()
+    await api.service('characters').remove(character._id)
+    snackbar.open('success', `${character.who.toUpperCase()} БЫЛ УВОЛЕН!`)
+  } catch (e: any) {
+    snackbar.open('error', e.message)
+  }
+}
+const save = async () => {
+  try {
+    const { valid } = await characterFormRef.value.validate()
     if (valid) {
-      player.value.strength = slider1
-      player.value.stamina = staminaValue
-      const res = await player.value.save()
-      dialog.value = false
+      await characterDialogData.value.save()
+      characterDialogData.display = false
     }
-  } catch (e) {
-    console.log(e)
+  } catch (error: any) {
+    snackbar.open('error', error.message)
   }
-
-  //   const characters = api
-  //     .service('characters')
-  //     .useFind(charactersQuery, { paginateOn: 'server' })
-}
-const deleteBtn = async (id: string) => {
-  try {
-    await api.service('characters').remove(id)
-  } catch (e) {
-    console.log(e)
-  }
-}
-const validateClass = (url: string): boolean => {
-  if (url === 'mage' || 'warrior') {
-    return true
-  }
-  return 'Выберите класс'
 }
 
-const validateFile = (value: string) => {
-  if (value) {
-    return true
-  }
-  return 'Выберите подходящий тип файла'
+const menuDialogData = reactive<IDialogData>({
+  display: false,
+  value: null,
+})
+
+const openGovno = (character) => {
+  menuDialogData.display = true
+  menuDialogData.value = character._id
+}
+
+const {
+  rules: { validateClass },
+} = useValidation()
+
+const whoItems = [
+  {
+    label: 'all',
+    value: 'all',
+  },
+  {
+    label: 'Warrior',
+    value: 'warrior',
+  },
+  {
+    label: 'Mage',
+    value: 'mage',
+  },
+]
+const selectCharacter = async (_id: string) => {
+  console.log(_id)
+  await navigateTo({
+    path: '/menu/' + _id,
+  })
 }
 </script>
 

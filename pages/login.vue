@@ -2,10 +2,7 @@
 v-row(align='center', no-gutters)
   v-spacer
   v-col(cols='11', sm='10', md='8', lg='7', xl='6')
-    v-card.bg-secondary.pa-10(width='100%')
-      v-row
-        v-col
-          p.text-sm-h3.text-h4.font-weight-bold.text-red.text-center Кто ты войн?
+    DefaultCardWrapper(title='Кто ты войн?')
       v-form(ref='form', @submit.prevent='auth')
         v-row
           v-col(cols='12')
@@ -38,7 +35,7 @@ const auth = async () => {
       strategy: 'local',
       ...user.value,
     })
-    await navigateTo('/menu')
+    await navigateTo('/characters')
     snackbarStore.open('success', 'В бой')
   } catch (e: any) {
     console.log(e.message)
