@@ -1,8 +1,11 @@
 <template lang="pug">
-v-card.bg-secondary.pa-10(width='100%')
-  v-row
+v-card.bg-secondary.px-5.px-sm-10.py-5.overflow-y-auto(
+  width='100%',
+  height='100%'
+)
+  v-row.mb-4
     v-col.text-center
-      h4.text-red.text-h4.font-weight-bold {{ title }}
+      h4.text-red.text-h3.font-weight-bold {{ title }}
   v-row
     v-col
       slot

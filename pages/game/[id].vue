@@ -26,7 +26,7 @@ v-row(no-gutters)
           v-list.bg-primary.rounded-lg.pa-1
             v-list-item.my-2.bg-white.rounded-lg(width='100%')
               template(#append)
-                v-btn(color='red') Удалить
+                v-btn Удалить
               p Присоедениться: {{ raund }}
         v-spacer
       v-row

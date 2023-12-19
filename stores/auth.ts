@@ -1,13 +1,10 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { type NullableId } from '@feathersjs/feathers'
-import decode from 'jwt-decode'
-import { BadRequest } from '@feathersjs/errors'
 
 interface AuthenticateData {
   strategy: 'local'
-  code?: string // mfa / otp
-  accessToken?: string // mfa / otp
-  memberId?: string // dependent
+  email: string
+  password: number
 }
 
 export const useAuthStore = defineStore('auth', () => {

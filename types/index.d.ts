@@ -6,6 +6,7 @@ declare global {
 
   type IPlayer = Players
   type ICharacter = Characters
+  type IGame = Game
 
   interface IDialogData {
     display: boolean

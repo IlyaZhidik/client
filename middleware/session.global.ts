@@ -9,9 +9,9 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
   if (
     auth.player &&
     publicRoutes.includes(to.fullPath) &&
-    to.fullPath !== '/menu'
+    to.fullPath !== '/characters'
   ) {
-    return navigateTo('/menu')
+    return navigateTo('/characters')
   }
   if (!auth.player) {
     if (!publicRoutes.includes(to.path)) return navigateTo('/login')

@@ -56,8 +56,7 @@ export default defineNuxtPlugin((nuxt) => {
       game: {
         setupInstance(data: any) {
           const defaults = {
-            name: 'zxc1',
-            rounds: 1,
+            name: '',
           }
           return useInstanceDefaults(defaults, data)
         },

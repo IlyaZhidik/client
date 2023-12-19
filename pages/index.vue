@@ -1,35 +1,16 @@
 <template lang="pug">
-v-row(align='center', no-gutters)
-  v-spacer
-  v-col(cols='12', sm='7', md='5', lg='4', xl='3')
-    v-card.bg-secondary(width='100%')
-      v-row(align='center', style='height: 90px')
-        v-col
-          h1.text-sm-h3.text-h4.font-weight-bold.text-red.text-center Fight Club
-      v-row(align='center', no-gutters, style='height: 140px')
-        v-col
-          v-row
-            v-col(align='center')
-              v-btn(width='200', height='45', color='red', to='login') Логин
-          v-row
-            v-col(align='center')
-              v-btn(
-                width='200',
-                height='45',
-                variant='outlined',
-                to='registration'
-              ) Регистрация
-  v-spacer
+DefaultCardWrapper(title='Fight Club')
+  v-row(justify='center', align='center')
+    v-col
+      v-btn.text-subtitle-1(to='login') Логин
+    v-col
+      v-btn.text-subtitle-1(variant='outlined', to='registration') Регистрация
 </template>
 
 <script setup>
 definePageMeta({
   layout: 'login',
 })
-const authStore = useAuthStore()
-if (authStore.player) {
-  navigateTo('/menu')
-}
 </script>
 
 <style scoped lang="scss"></style>

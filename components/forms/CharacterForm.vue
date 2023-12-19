@@ -1,9 +1,11 @@
 <template lang="pug">
 v-form(ref='formRef', @submit.prevent)
   v-row
-    v-col(cols='12')
-      v-avatar(size='x-large')
-        v-img(v-if='character.avatar', :src='character.avatar')
+    v-spacer
+    v-col(cols='auto')
+      v-img(v-if='character.avatar', :src='character.avatar', width='500')
+    v-spacer
+  v-row
     v-col(cols='12')
       v-file-input(
         v-model='avatarFile',
@@ -36,13 +38,12 @@ v-form(ref='formRef', @submit.prevent)
       p Сила: {{ character.strength }}
       p Выносливость: {{ character.stamina }}
     template(v-if='character.__isClone')
-      v-row
-        v-col.text-center
-          p.text-subtitle-2 Количество побед: {{ character.wins }}
-          p.text-subtitle-2 Количество сыгранных игр: {{ character.games }}
-          p.text-subtitle-2 Доступные очки: {{ character.powerPoints }}
-          p.text-subtitle-2 Уровень героя: {{ character.lvl }}
-          p.text-subtitle-2 Полученный опыт: {{ character.exp }} / 100
+      v-col.text-center
+        p.text-subtitle-2 Количество побед: {{ character.wins }}
+        p.text-subtitle-2 Количество сыгранных игр: {{ character.games }}
+        p.text-subtitle-2 Доступные очки: {{ character.powerPoints }}
+        p.text-subtitle-2 Уровень героя: {{ character.lvl }}
+        p.text-subtitle-2 Полученный опыт: {{ character.exp }} / 100
 </template>
 
 <script setup lang="ts">

@@ -1,14 +1,17 @@
 <template lang="pug">
-v-container.d-flex.justify-end.bg-primary(style='min-height: 100vh', fluid='')
-  v-btn.position-fixed.text-subtitle-1(
-    style='top: 40px; right: 40px; z-index: 4',
-    @click='logoutBtn'
-  ) Logout
-  v-row(align='center', no-gutters)
-    v-spacer
-    v-col(cols='11', sm='10', md='8', lg='7', xl='6')
-      slot
-    v-spacer
+v-app
+  v-main
+    v-btn.position-fixed.text-subtitle-1(
+      style='top: 40px; right: 40px; z-index: 4',
+      width='200px',
+      @click='logoutBtn'
+    ) Сменить Личность
+    v-container.bg-primary.pa-0.h-100(style='min-height: 100vh', fluid)
+      v-row.h-100(no-gutters, align='center')
+        v-spacer
+        v-col(cols='11', sm='10', md='6', lg='4', xl='4')
+          slot
+        v-spacer
 </template>
 
 <script setup lang="ts">

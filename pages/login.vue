@@ -1,19 +1,14 @@
 <template lang="pug">
-v-row(align='center', no-gutters)
-  v-spacer
-  v-col(cols='11', sm='10', md='8', lg='7', xl='6')
-    DefaultCardWrapper(title='Кто ты войн?')
-      v-form(ref='form', @submit.prevent='auth')
-        v-row
-          v-col(cols='12')
-            v-text-field(v-model='user.email', type='text', label='mail')
-          v-col(cols='12')
-            v-text-field(v-model='user.password', type='text', label='пароль')
-          v-col.d-flex.align-center.justify-center(cols='12')
-            v-btn(type='submit') Войти
-          v-col.d-flex.justify-end(cols='12')
-            NuxtLink(to='/registration', style='text-decoration: none') зарегистрироваться
-  v-spacer
+DefaultCardWrapper(title='Кто ты войн?')
+  LoginForm(ref='loginFormRef', v-model='user')
+  v-row
+    v-col(cols='12')
+      v-btn.text-subtitle-1(@click='auth') Войти
+    v-col.text-end(cols='12')
+      NuxtLink.text-h6.text-primary(
+        to='/registration',
+        style='text-decoration: none'
+      ) Зарегистрироваться
 </template>
 
 <script setup lang="ts">
@@ -22,25 +17,25 @@ definePageMeta({
   layout: 'login',
 })
 const authStore = useAuthStore()
+const snackbar = useSnackbarStore()
 
-const snackbarStore = useSnackbarStore()
 const user = ref({
   email: '',
   password: '',
 })
+const loginFormRef = ref()
 
 const auth = async () => {
   try {
-    const res = await authStore.authenticate({
+    await authStore.authenticate({
       strategy: 'local',
-      ...user.value,
+      email: user.value.email,
+      password: user.value.password,
     })
     await navigateTo('/characters')
-    snackbarStore.open('success', 'В бой')
+    snackbar.open('success', 'В бой')
   } catch (e: any) {
-    console.log(e.message)
-    console.log(snackbarStore)
-    snackbarStore.open('error', e.message)
+    snackbar.open('error', e.message)
   }
 }
 </script>

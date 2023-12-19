@@ -24,7 +24,14 @@ export default defineNuxtPlugin((nuxtApp) => {
     },
     components: { ...components, ...labsComponents },
     directives,
-    defaults: {},
+    defaults: {
+      VBtn: {
+        color: 'red',
+        variant: 'flat',
+        height: '45',
+        width: '100%',
+      },
+    },
   })
 
   nuxtApp.vueApp.use(vuetify)
