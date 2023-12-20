@@ -40,7 +40,8 @@ DefaultCardWrapper(title='Доступные Бои')
   v-row
     v-col(cols='12')
       v-btn.text-subtitle-1(color='primary', @click='createNewGame') Забить Стрелку
-      //v-btn.text-subtitle-1(@click='navigateTo("/characters")') К Выбору Бойца
+    v-col(cols='12')
+      v-btn.text-subtitle-1(@click='navigateTo("/characters")') К Выбору Бойца
       //p {{ character$.data.who }}
       //v-avatar(size='x-large')
       //  v-img(:src='character$.data.avatar', alt='Аватарка пользователя')
